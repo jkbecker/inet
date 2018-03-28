@@ -146,55 +146,41 @@ folder of the simulation for later analysis.
 
 \subsection{Wireless Networks}
 
-%TODO: AccessPoint, WirelessHost infrastructure mode
+TODO: AccessPoint, WirelessHost infrastructure mode
 
 Wireless network connections are not modeled with OMNeT++ connections due the
 dynamically changing nature of connectivity. For wireless networks, an
-additional module representing the transmission medium, is required to
+additional module, one that represents the transmission medium, is required to
 maintain connectivity information.
 
-Building a simple wireless network is somewhat different, because wireless
-nodes don't use OMNeT++ connections. In this case, the network contains an
-additional module which represents the transmission medium.
+TODO 
 
 \nedsnippet{WirelessNetworkExample}{Wireless network example}
 
-For the above network, the INI file configures node mobility using a
-stochastic model. In wireless simulations, some form of a mobility model is
-essential to provide positions for the transmission medium during the
-computation of signal propagation and path loss. In addition, each ad hoc
-node is configured to include a simple ping application.
+TODO adjust text: 
+
+In the above network, positions in the display strings provide 
+positions for the transmission medium during the computation of 
+signal propagation and path loss. 
+
+In addition, \ttt{host1} is configured to periodically send 
+\protocol{UDP} packets to \ttt{host2} over the AP.
 
 \inisnippet{WirelessNetworkConfigurationExample}{Wireless network configuration example}
 
-When the above simulation is run, each ad hoc node periodically sends an
-ICMP echo requests to the first node. This simulation runs indefinitely
-while it continuously prints the usual ping round trip time report on the
-standard output.
 
-\subsection{Ethernet Networks}
-
-%TODO: EtherHub, EtherBus, EtherSwitch, EtherHost
-
-\subsection{MPLS Networks}
-
-%TODO: LdpRouter, RsvpRouter
 
 \subsection{Mobile Ad hoc Networks}
 
-%TODO: AdhocHost, ManetRouter, AodvRouter, DymoRouter, GpsrRouter
+TODO commentary
 
-\subsection{Sensor Networks}
+\nedsnippet{MobileAdhocNetworkExample}{Mobile ad hoc network example}
 
-%TOOD: SensorNode, SensorGateway
+TODO
 
-\subsection{Virtual Private Networks}
+\inisnippet{MobileAdhocNetworkConfigurationExample}{Mobile ad hoc network configuration example}
 
-%TOOD: VpnIngressNode, VpnEgressNode
-
-\subsection{Mixed Networks}
-
-%TODO: wired + wireless
+TODO
 
 
 
