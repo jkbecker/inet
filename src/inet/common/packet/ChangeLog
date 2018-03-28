@@ -1,3 +1,477 @@
+2018-03-27  Levente Mészáros
+
+	Common: Updated Packet API documentation and some cosmetics.
+
+2018-03-21  Levente MÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ©szÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ros
+
+	Common: Refactored Packet API for clarity and consistency.
+
+	Removed getHeaderPoppedLength/getTrailerPoppedLength from Packet. Merged
+	insertAtBeginning into insertAtFront in Packet. Merged insertAtEnd into
+	insertAtBack in Packet. Merged removeFromBeginning into removeAtFront in
+	Packet. Merged removeFromEnd into removeAtBack in Packet.
+
+	Renamed contents to content in Packet and ChunkQueue.
+
+	Renamed get/setHeaderPopOffset to get/setFrontOffset in Packet. Renamed
+	get/setTrailerPopOffset to get/setBackOffset in Packet. Renamed
+	peekHeader/peekTrailer to peekAtFront/peekAtBack in Packet. Renamed
+	popHeader/popTrailer to popAtFront/popAtBack in Packet. Renamed
+	hasHeader/hasTrailer to hasAtFront/hasAtBack in Packet. Renamed
+	removeHeader/removeTrailer to removeAtFront/removeAtBack in Packet.
+	Renamed peekDataBits to peekDataAsBits and peekDataBytes to
+	peekDataAsBytes in Packet. Renamed peekAllBits to peekAllAsBits and
+	peekAllBytes to peekAllAsBytes in Packet. Renamed
+	removePoppedHeader/removePoppedTrailers to trimFront/trimBack in Packet.
+	Renamed removePoppedChunks to trim in Packet.
+
+	Renamed canInsertAtBeginning to canInsertAtFront in Chunk and subclasses.
+	Renamed canInsertAtEnd to canInsertAtBack in Chunk and subclasses.
+	Renamed doInsertAtBeginning to doInsertAtFront in Chunk and subclasses.
+	Renamed doInsertAtBack to canInsertAtBack in Chunk and subclasses.
+	Renamed doRemoveFromBeginning to doRemoveAtFront in Chunk and subclasses.
+	Renamed doRemoveFromEnd to doRemoveAtBack in Chunk and subclasses.
+
+2018-03-15  Irene Ruengeler
+
+	ExtInterface and SctpDeserialize
+
+2018-03-15  Irene Ruengeler
+
+	Deserialize
+
+2018-03-12  Irene Ruengeler
+
+	ExtInterfaxe
+
+2018-03-08  Levente Mészáros
+
+	Common: Added 'show auto fields' tags to PacketPrinter.
+
+2018-03-08  Levente Mészáros
+
+	All: Separated PacketPrinter::Context from ProtocolPrinter::Context.
+
+2018-03-08  Levente Mészáros
+
+	Common: Implemented some new options and refactored printer.
+
+2018-03-08  Levente Mészáros
+
+	Common: Revived printers with default options.
+
+2018-03-08  Levente Mészáros
+
+	Common: Extracted column printer methods.
+
+2018-03-08  Levente Mészáros
+
+	Common: Added more tags, renamed a few and implemented some.
+
+2018-03-08  Zoltan Bojthe
+
+	common: PacketPrinter: remove protocol specific includes
+
+2018-03-08  Zoltan Bojthe
+
+	ethernet: added ProtocolPrinter
+
+2018-03-08  Zoltan Bojthe
+
+	ieee802.2: added ProtocolPrinter
+
+2018-03-08  Zoltan Bojthe
+
+	ieee80211: added ProtocolPrinters
+
+2018-03-08  Levente Mészáros
+
+	Common: Renamed tags to be more human friendly.
+
+2018-03-07  Zoltan Bojthe
+
+	ipv4: added Ipv4ProtocolPrinter
+
+2018-03-07  Zoltan Bojthe
+
+	icmp: added IcmpProtocolPrinter
+
+2018-03-07  Zoltan Bojthe
+
+	common: PacketPrinter: nullptr protocol infoColumn appended to
+	context.infoColumn (keep last known protocol info field)
+
+2018-03-07  Zoltan Bojthe
+
+	tcp: added TcpProtocolPrinter
+
+2018-03-07  Zoltan Bojthe
+
+	udp: added UdpProtocolPrinter
+
+2018-03-07  Zoltan Bojthe
+
+	arp: added ArpProtocolPrinter
+
+2018-03-07  Zoltan Bojthe
+
+	common: packet printers: follow API changes
+
+2018-03-07  Zoltan Bojthe
+
+	common: PacketPrinter: remove kludge
+
+2018-03-07  Levente MÃ©szÃ¡ros
+
+	Common: Adapted PacketPrinter to the new ProtocolPrinter interface.
+
+2018-03-07  Levente Mészáros
+
+	Common: Added ProtocolPrinter and ProtocolPrinterRegistry.
+
+2018-03-06  Zoltan Bojthe
+
+	udp: added UdpHeader::str() and uses it in PacketPrinter
+
+2018-03-06  Zoltan Bojthe
+
+	tcp: added TcpHeader::str(), use it in PacketPrinter
+
+2018-03-06  Zoltan Bojthe
+
+	arp: added str() for ArpPacket, use it in PacketPrinter
+
+2018-03-06  Zoltan Bojthe
+
+	icmp: moved dissector to separate file
+
+2018-03-06  Zoltan Bojthe
+
+	Tcp: dissector moved to separate file
+
+2018-03-06  Zoltan Bojthe
+
+	Ieee80211Phy: dissector moved to separate file
+
+2018-03-06  Zoltan Bojthe
+
+	Ieee802Llc: moved dissector to separate file
+
+2018-03-06  Zoltan Bojthe
+
+	Ieee80211Mgmt: moved dissector to separate file
+
+2018-03-06  Zoltan Bojthe
+
+	common: ProtocolDissector: removed unnecessary includes
+
+2018-03-06  Zoltan Bojthe
+
+	Ieee80211Mac: moved dissector to separated file
+
+2018-02-27  Levente Mészáros
+
+	Common: Added new length column and some tags to PacketPrinter.
+
+2018-02-27  Levente Mészáros
+
+	Common: Added getChunkLength to PacketDissector::ProtocolDataUnit.
+
+2018-02-23  Levente Mészáros
+
+	Common: Fixed column mismatch in PacketPrinter and other enhacements.
+
+2018-02-23  Levente Mészáros
+
+	Common: Dropped kludges from default protocol dissector.
+
+2018-02-23  Levente Mészáros
+
+	Common: Fixed protocol dissectors.
+
+2018-02-23  Levente Mészáros
+
+	Common: Fixed 802.11 dissector.
+
+2018-02-23  Levente Mészáros
+
+	Common: Added colorization of incorrect packets to PacketPrinter.
+
+2018-02-23  Levente Mészáros
+
+	Common: Added markIncorrect to dissector API.
+
+2018-02-22  Zoltan Bojthe
+
+	common: fixup - parameter name fixed
+
+2018-02-21  Levente Mészáros
+
+	Common: Added PacketPrinter::printPacket with 2 arguments using default
+	options.
+
+2018-03-05  Zoltan Bojthe
+
+	common: pcaprecorder: fixing protocol names (ethernetmac, ieee80211mac)
+
+2018-02-21  Zoltan Bojthe
+
+	802.11: length parameter required for popTrailer on byte representation
+
+2018-02-21  Zoltan Bojthe
+
+	common: PacketPrinter: compatibility with omnet
+
+2018-02-21  Levente Mészáros
+
+	Common: Added support for new message printer API.
+
+2018-02-21  Levente Mészáros
+
+	Common: Fixed 802.11 dissector.
+
+2018-02-20  Levente Mészáros
+
+	All: Renamed dissect functions.
+
+2018-02-20  Levente MÃ©szÃ¡ros
+
+	Common: Changed IEEE 802.11 dissector to use the
+	Ieee80211PacketSubprotocolTag.
+
+2018-02-19  Zoltan Bojthe
+
+	common: Chunk: streamout bugfix for nullptr Chunk
+
+2018-02-19  Zoltan Bojthe
+
+	common: dissector: fixes for rebase (uncustomize msg files, camelize
+	function names)
+
+2018-02-19  Levente Mészáros
+
+	Common: Added dissection of remaining junk in packet (e.g. ethernet
+	padding at IP level).
+
+2018-02-16  Zoltan Bojthe
+
+	eth: ProtocolDissector moved to EtherMacBase.cc
+
+2018-02-16  Zoltan Bojthe
+
+	icmp: moved dissector to Icmp.cc
+
+2018-02-19  Zoltan Bojthe
+
+	arp: protocoldissector moved to Arp.cc
+
+2018-02-16  Zoltan Bojthe
+
+	ipv4: dissector moved to Ipv4.cc, manage totallength, detect
+	fragmentation
+
+2018-02-16  Zoltan Bojthe
+
+	common: DefaultDissector: added missing
+	startProtocolDataUnit()/endProtocolDataUnit() calls
+
+2018-02-16  Zoltan Bojthe
+
+	common: DefaultDissector: detects PPP header
+
+2018-02-16  Zoltan Bojthe
+
+	ppp: moved dissector to Ppp.cc
+
+2018-02-16  Zoltan Bojthe
+
+	common, udp: udp dissector moved to Udp.cc
+
+2018-02-15  Levente Mészáros
+
+	Common: Removed unnecessary packet copy.
+
+2018-02-15  Levente Mészáros
+
+	Common: Switched PacketPrinter to Protocol::getDescriptiveName().
+
+2018-02-15  Levente Mészáros
+
+	Common: Renamed some more functions, variables, etc.
+
+2018-02-15  Levente MÃ©szÃ¡ros
+
+	Common: Renamed classes and added some documentation.
+
+2018-02-15  Levente Mészáros
+
+	Common: Moved PacketPrinter to common/packet.
+
+2018-02-15  Levente Mészáros
+
+	Common: Renamed PcapRecorder parameter to packetDataFilter.
+
+2018-02-15  Levente Mészáros
+
+	Common: Added chunkFilter to PcapRecorder.
+
+2018-02-15  Levente Mészáros
+
+	Common: Refactor callback interfaces to be more independent.
+
+2018-02-14  Levente Mészáros
+
+	Common: Added inside-out and left-to-right printing algorithms to
+	PacketPrinter.
+
+2018-02-14  Levente Mészáros
+
+	Common: Implemented dissector for 802.11 PHY padding, 802.11 aggregated
+	and fragmented packets.
+
+2018-02-14  Levente MÃ©szÃ¡ros
+
+	Common: Moved ProtocolTreeBuilder into PacketDissector.
+
+2018-02-14  Levente Mészáros
+
+	Common: Removed some consts.
+
+2018-02-14  Levente Mészáros
+
+	Common: Added startProtocol and endProtocol to allow building a tree.
+
+2018-02-14  Levente Mészáros
+
+	Common: Added PF_ALLOW_ALL flag that disables throwing errors from
+	peek/pop functions.
+
+2018-02-14  Levente Mészáros
+
+	Common: Added a PacketFilter class that can filter packets based on the
+	actual data.
+
+2018-02-13  Levente Mészáros
+
+	Common: Added new PacketPrinter based on general purpose packet/protocol
+	dissector.
+
+2018-02-13  Levente Mészáros
+
+	Common: Added general purpose packet/protocol dissector API.
+
+2018-02-27  Irene Ruengeler
+
+	Change PacketDrill and improve Data handling
+
+2018-02-12  Zoltan Bojthe
+
+	Renamed function names to use camel case. (ipv4, ipv6, arp)
+
+2018-02-09  Zoltan Bojthe
+
+	arp: ArpPacket: camelized field names
+
+2018-01-23  Zoltan Bojthe
+
+	ipv4: Ipv4Header: remove @customize
+
+2018-02-06  Zoltan Bojthe
+
+	common: PacketDump: eliminate compiler warning: "unused variable"
+
+2018-02-02  Zoltan Bojthe
+
+	common: changed Packet::str() format: "(<classname>) packetname (<length>
+	bytes) [<chunks>]"
+
+2018-02-05  Irene Ruengeler
+
+	Send data
+
+2018-02-01  Levente Mészáros
+
+	Common: Disallowed inserting empty chunks into Packet, ChunkQueue and
+	ChunkBuffer.
+
+	This may catch bugs early on in the user code.
+
+2018-02-01  Levente Mészáros
+
+	Common: Added Chunk::isEmpty.
+
+2018-02-01  Levente MÃ©szÃ¡ros
+
+	Common: Removed virtual qualifier from Chunk methods where it's
+	unnecessary.
+
+2018-02-01  Levente MÃ©szÃ¡ros
+
+	Common: Changed SliceChunk and SequenceChunk to forbid using mutable
+	chunks inside.
+
+2018-01-23  Irene Ruengeler
+
+	Sctp packet flow and UDP encaps
+
+2018-01-22  Irene Ruengeler
+
+	First steps in migrating
+
+2018-01-12  Levente Mészáros
+
+	Common: Fixed findTag return type in Chunk.
+
+2018-01-12  Levente Mészáros
+
+	Common: Added getTags to Packet to allow passing around the set of tags.
+
+2018-01-12  Levente Mészáros
+
+	Common: Renamed Command* to Message* and added Request and Indication
+	subclasses.
+
+2018-01-18  Levente Mészáros
+
+	Replaced packet tags API calls to use the new API.
+
+2018-01-02  Levente Mészáros
+
+	Common: Added a separate Command class for protocol commands (non-packet
+	messages).
+
+2018-01-02  Levente Mészáros
+
+	Common: Added copying for tags in Packet copy constructor.
+
+	This tag set is not yet used.
+
+2018-01-02  Levente Mészáros
+
+	Common: Added tags field to Packet descriptor.
+
+2018-01-02  Levente Mészáros
+
+	Common: Dropped header, data, trailer descriptor fields.
+
+	These were incorrectly named anyway, because it should have been
+	poppedHeader, poppedTrailer or something like that. We should not have
+	cache fields for them, we should rather have proper support for shared
+	pointers in descriptors.
+
+2017-12-19  TÖRÖK Attila
+
+	??? Fix build without cObject::handleChange(). Details:
+
+	I'm pretty confident about the change in Chunk.h:
+
+	  If Chunk::handleChange() is declared override, but there
+	 is no cObject::handleChange(), that is obviously an error.
+	 This way, if cObject::handleChange() were to be reintroduced
+	 anyways, we would only get a warning, which is... bearable.
+
+	About Ipv6ExtHeaderTagBase... I really have no idea.
+
 ====== inet-4.x ======
 
 2017-12-22  ------ inet-3.99.2 released ------

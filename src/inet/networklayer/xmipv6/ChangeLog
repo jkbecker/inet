@@ -1,3 +1,43 @@
+2018-02-14  Zoltan Bojthe
+
+	ipv6: camelize function names
+
+2018-02-12  Zoltan Bojthe
+
+	networklayer: L3AddressResolver: rename routingTableOf/routingTable6Of to
+	getIpv4RoutingTableOf/getIpv6RoutingTableOf
+
+2018-02-19  Zoltan Bojthe
+
+	Renamed function names to use camel case.
+
+2018-01-26  Zoltan Bojthe
+
+	ipv6: remove @customize from Ipv6Header, Ipv6ExtHeaderTagBase and
+	Ipv6ExtensionHeaders
+
+2018-01-03  Levente Mészáros
+
+	All: Switched from message pointer to packet pointer where available.
+
+2018-01-18  Levente Mészáros
+
+	Replaced packet tags API calls to use the new API.
+
+2018-01-17  Zoltan Bojthe
+
+	xmipv6: added packetDrop signal - TODO: replace OTHER_PACKET_DROP to ...
+
+2018-01-17  Zoltan Bojthe
+
+	xmipv6: bugfixes, code cleaning: illegal deletions removed, unnecessary
+	parameters removed
+
+2018-01-05  Zoltan Bojthe
+
+	Renamed NF_* signals to use camel case.
+	Renamed signal variables to *Signal.
+
 ====== inet-4.x ======
 
 2017-12-22  ------ inet-3.99.2 released ------

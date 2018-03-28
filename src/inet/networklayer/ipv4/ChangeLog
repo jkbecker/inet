@@ -1,3 +1,180 @@
+2018-03-15  Irene Ruengeler
+
+	Deserialize
+
+2018-03-12  Irene Ruengeler
+
+	ExtInterfaxe
+
+2018-03-09  Zoltan Bojthe
+
+	ipv4: bugfix: double free was occured in Ipv4FragBuf destructor
+
+2018-03-09  Zoltan Bojthe
+
+	ipv4: bugfix: calculated crc was wrong in fragmented frames - fingerprint
+	changed
+
+2018-03-08  Levente Mészáros
+
+	All: Separated PacketPrinter::Context from ProtocolPrinter::Context.
+
+2018-03-07  Zoltan Bojthe
+
+	ipv4: added Ipv4ProtocolPrinter
+
+2018-03-07  Zoltan Bojthe
+
+	ipv4: header: added comment
+
+2018-03-07  Zoltan Bojthe
+
+	icmp: added IcmpProtocolPrinter
+
+2018-03-06  Zoltan Bojthe
+
+	icmp: moved dissector to separate file
+
+2018-03-05  Zoltan Bojthe
+
+	L3Socket: uses const Protocol pointers instead of IP_PROTOCOL_ID-s (eg.
+	udp=17)
+
+2018-02-28  Zoltan Bojthe
+
+	ipv4: dissector: fixed handling for incorrect packets
+
+2018-02-27  Zoltan Bojthe
+
+	ipv4: dissector moved to separate files
+
+2018-02-26  Zoltan Bojthe
+
+	ipv4: added missing packetDropped signal
+
+2018-02-26  Zoltan Bojthe
+
+	igmp: added dissector
+
+2018-02-16  Zoltan Bojthe
+
+	icmp: dissector: TODO minimal implementation for icmp error packets
+
+2018-02-16  Zoltan Bojthe
+
+	icmp: moved dissector to Icmp.cc
+
+2018-02-16  Zoltan Bojthe
+
+	ipv4: dissector moved to Ipv4.cc, manage totallength, detect
+	fragmentation
+
+2018-02-28  Irene Ruengeler
+
+	Leave verifyCrc unchanged
+
+2018-02-27  Irene Ruengeler
+
+	Change PacketDrill and improve Data handling
+
+2018-02-14  Zoltan Bojthe
+
+	networklayer: InterfaceEntry: camelize function names
+
+2018-02-12  Zoltan Bojthe
+
+	networklayer: InterfaceEntry: camelized functions
+
+2018-02-12  Zoltan Bojthe
+
+	Renamed function names to use camel case. (ipv4, ipv6, arp)
+
+2018-02-19  Zoltan Bojthe
+
+	Renamed function names to use camel case.
+
+2018-02-12  Zoltan Bojthe
+
+	networklayer: removed unused code from msg files
+
+2018-01-23  Zoltan Bojthe
+
+	ipv4: Ipv4Header: remove @customize
+
+2018-01-19  Zoltan Bojthe
+
+	common: TlvOptions: revise msg customization
+
+2018-02-01  Zoltan Bojthe
+
+	aodv: moved to 'aodv' namespace; renamed messages: Rreq, Rrep, RrepAck,
+	Rerr
+
+2018-01-25  Levente Mészáros
+
+	ICMP: Added SP_INDICATION service primitive when sending error reports to
+	transport.
+
+2018-01-25  Levente Mészáros
+
+	All: Adapted register protocol listeners to the new API based on OSI
+	service primitives.
+
+2018-01-24  Levente MÃÂÃÂ©szÃÂÃÂ¡ros
+
+	All: Adapted registerProtocol calls to the new API based on OSI service
+	primitives.
+
+2018-01-23  Levente Mészáros
+
+	All: Replaced MessageDispatcher lower/upper vector gates with a single
+	one.
+
+2018-01-23  Irene Ruengeler
+
+	Sctp packet flow and UDP encaps
+
+2018-01-22  Irene Ruengeler
+
+	First steps in migrating
+
+2018-01-12  Levente Mészáros
+
+	All: Fixed processing cMessage tags by adding required cast operations.
+
+2018-01-02  Levente Mészáros
+
+	Replaced cPacket with Packet.
+
+2018-01-03  Levente Mészáros
+
+	All: Replaced transferTagsFrom with copyTags.
+
+2018-01-18  Levente Mészáros
+
+	Replaced packet tags API calls to use the new API.
+
+2018-01-11  Zoltan Bojthe
+
+	Renamed all *Nic modules to *Interface.
+
+2018-01-12  Zoltan Bojthe
+
+	Fixed double and int inconsistency: NED vs. INI and NED vs. C++
+
+2018-01-05  Zoltan Bojthe
+
+	all: signal renaming step 2
+
+	- fixing camelize
+	- *Genericnetworkprotocolconfig* -> *GnpConfig*
+	- arp: fooArpResulotioSignal -> arpResolutionFooSignal
+
+2018-01-05  Zoltan Bojthe
+
+	Renamed NF_* signals to use camel case.
+	Renamed signal variables to *Signal.
+
 ====== inet-4.x ======
 
 2017-12-22  ------ inet-3.99.2 released ------

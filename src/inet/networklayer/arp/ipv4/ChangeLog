@@ -1,3 +1,78 @@
+2018-03-08  Levente Mészáros
+
+	All: Separated PacketPrinter::Context from ProtocolPrinter::Context.
+
+2018-03-07  Zoltan Bojthe
+
+	arp: added ArpProtocolPrinter
+
+2018-03-07  Zoltan Bojthe
+
+	arp: moved dissector to separate file
+
+2018-03-06  Zoltan Bojthe
+
+	arp: added str() for ArpPacket, use it in PacketPrinter
+
+2018-02-19  Zoltan Bojthe
+
+	arp: protocoldissector moved to Arp.cc
+
+2018-02-19  Zoltan Bojthe
+
+	Renamed function names to use camel case.
+
+2018-02-09  Zoltan Bojthe
+
+	arp: ArpPacket: camelized field names
+
+2018-02-09  Zoltan Bojthe
+
+	arp: signals: arpRequestSent/arpReplySent emits the ARP packet
+
+2018-02-09  Zoltan Bojthe
+
+	arp: signals: sentRequest/sentReply renamed to
+	arpRequestSent/arpReplySent and emits Packet instead of 1L
+
+2018-01-23  Zoltan Bojthe
+
+	ipv4: Ipv4Header: remove @customize
+
+2018-01-24  Levente MÃÂÃÂ©szÃÂÃÂ¡ros
+
+	All: Adapted registerProtocol calls to the new API based on OSI service
+	primitives.
+
+2018-01-12  Levente Mészáros
+
+	All: Replaced packet variable names where the name was wrong.
+
+2018-01-03  Levente Mészáros
+
+	All: Replaced cMessage with Packet where applicable.
+
+2018-01-18  Levente Mészáros
+
+	Replaced packet tags API calls to use the new API.
+
+2018-01-05  Zoltan Bojthe
+
+	arp: signal renaming: sentReq -> sentRequest
+
+2018-01-05  Zoltan Bojthe
+
+	all: signal renaming step 2
+
+	- fixing camelize
+	- *Genericnetworkprotocolconfig* -> *GnpConfig*
+	- arp: fooArpResulotioSignal -> arpResolutionFooSignal
+
+2018-01-05  Zoltan Bojthe
+
+	Renamed NF_* signals to use camel case.
+	Renamed signal variables to *Signal.
+
 ====== inet-4.x ======
 
 2017-12-22  ------ inet-3.99.2 released ------

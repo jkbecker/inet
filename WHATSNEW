@@ -1,6 +1,23 @@
 Recent changes in the INET Framework
 ====================================
 
+INET-3.99.3 (March 2018) - Development
+--------------------------------------
+
+This is planned to be the last development release of the upcoming INET-4.0 version.
+
+The code is more stable now, so we don't expect too many changes until the final
+version is released. This version requires OMNeT++ 5.3 preview 4.
+
+The highlights of this release are:
+
+1. Packet API refactoring
+
+2. Packet dissector API
+
+3. Packet printer API
+
+
 INET-3.99.2 (December 2017) - Development
 -----------------------------------------
 

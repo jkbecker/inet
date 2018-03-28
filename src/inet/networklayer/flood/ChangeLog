@@ -1,3 +1,32 @@
+2018-03-01  Zoltan Bojthe
+
+	flood: added dissector
+
+2018-03-02  Zoltan Bojthe
+
+	flood: added payloadLength field
+
+2018-02-28  Zoltan Bojthe
+
+	NetworkProtocolBase: added getProtocol(): for descendant modules can
+	specify the implemented protocol
+
+2018-02-06  Zoltan Bojthe
+
+	all: optimized payload protocol decoding: get it only once
+
+2018-01-03  Levente Mészáros
+
+	All: Replaced cMessage with Packet where applicable.
+
+2018-01-18  Levente Mészáros
+
+	Replaced packet tags API calls to use the new API.
+
+2018-01-12  Zoltan Bojthe
+
+	Fixed double and int inconsistency: NED vs. INI and NED vs. C++
+
 ====== inet-4.x ======
 
 2017-12-22  ------ inet-3.99.2 released ------

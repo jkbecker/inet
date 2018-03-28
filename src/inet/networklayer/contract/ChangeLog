@@ -1,3 +1,62 @@
+2018-03-05  Zoltan Bojthe
+
+	L3Socket: uses const Protocol pointers instead of IP_PROTOCOL_ID-s (eg.
+	udp=17)
+
+2018-02-12  Zoltan Bojthe
+
+	networklayer: added toString for some address descriptor
+
+2018-01-12  Levente Mészáros
+
+	All: Added missing Request kind arguments.
+
+2018-01-12  Levente Mészáros
+
+	All: Renamed Request variables.
+
+2018-01-12  Levente Mészáros
+
+	All: Fixed common message and packet processing by using getTags.
+
+2018-01-12  Levente MÃ©szÃ¡ros
+
+	All: Replaced cMessage commands with Request and Indication.
+
+2018-01-18  Levente Mészáros
+
+	Replaced packet tags API calls to use the new API.
+
+2018-01-15  Levente Mészáros
+
+	IPv6: Moved extension headers under ipv6 folder.
+
+2018-01-05  Zoltan Bojthe
+
+	all: signal renaming step 2
+
+	- fixing camelize
+	- *Genericnetworkprotocolconfig* -> *GnpConfig*
+	- arp: fooArpResulotioSignal -> arpResolutionFooSignal
+
+2018-01-05  Zoltan Bojthe
+
+	Renamed NF_* signals to use camel case.
+	Renamed signal variables to *Signal.
+
+2017-12-19  TÖRÖK Attila
+
+	??? Fix build without cObject::handleChange(). Details:
+
+	I'm pretty confident about the change in Chunk.h:
+
+	  If Chunk::handleChange() is declared override, but there
+	 is no cObject::handleChange(), that is obviously an error.
+	 This way, if cObject::handleChange() were to be reintroduced
+	 anyways, we would only get a warning, which is... bearable.
+
+	About Ipv6ExtHeaderTagBase... I really have no idea.
+
 ====== inet-4.x ======
 
 2017-12-22  ------ inet-3.99.2 released ------

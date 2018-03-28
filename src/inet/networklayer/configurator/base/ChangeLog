@@ -1,3 +1,19 @@
+2018-02-22  Zoltan Bojthe
+
+	NetworkConfiguratorBase: added an empty PacketProtocolTag
+
+2018-02-14  Zoltan Bojthe
+
+	networklayer: InterfaceEntry: camelize function names
+
+2018-01-18  Levente Mészáros
+
+	Replaced packet tags API calls to use the new API.
+
+2017-12-19  Zoltan Bojthe
+
+	all: rename step 8
+
 ====== inet-4.x ======
 
 2017-12-22  ------ inet-3.99.2 released ------

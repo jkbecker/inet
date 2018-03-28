@@ -1,3 +1,24 @@
+2018-02-12  Zoltan Bojthe
+
+	networklayer: added toString for some address descriptor
+
+2018-01-15  Levente Mészáros
+
+	IPv6: Moved extension headers under ipv6 folder.
+
+2017-12-19  TÖRÖK Attila
+
+	??? Fix build without cObject::handleChange(). Details:
+
+	I'm pretty confident about the change in Chunk.h:
+
+	  If Chunk::handleChange() is declared override, but there
+	 is no cObject::handleChange(), that is obviously an error.
+	 This way, if cObject::handleChange() were to be reintroduced
+	 anyways, we would only get a warning, which is... bearable.
+
+	About Ipv6ExtHeaderTagBase... I really have no idea.
+
 ====== inet-4.x ======
 
 2017-12-22  ------ inet-3.99.2 released ------
@@ -37,4 +58,3 @@
 	Added required import statements to MSG files according to new syntax.
 
 2017-11-16  ------ inet-3.99.1 released ------
-

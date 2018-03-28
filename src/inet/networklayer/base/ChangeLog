@@ -1,3 +1,39 @@
+2018-03-05  Zoltan Bojthe
+
+	L3Socket: uses const Protocol pointers instead of IP_PROTOCOL_ID-s (eg.
+	udp=17)
+
+2018-02-28  Zoltan Bojthe
+
+	NetworkProtocolBase: added getProtocol(): for descendant modules can
+	specify the implemented protocol
+
+2018-01-25  Levente Mészáros
+
+	All: Adapted register protocol listeners to the new API based on OSI
+	service primitives.
+
+2018-01-24  Levente MÃÂÃÂ©szÃÂÃÂ¡ros
+
+	All: Adapted registerProtocol calls to the new API based on OSI service
+	primitives.
+
+2018-01-12  Levente Mészáros
+
+	All: Fixed common message and packet processing by using getTags.
+
+2018-01-12  Levente Mészáros
+
+	All: Fixed processing cMessage tags by adding required cast operations.
+
+2018-01-02  Levente Mészáros
+
+	Replaced cPacket with Packet.
+
+2018-01-18  Levente Mészáros
+
+	Replaced packet tags API calls to use the new API.
+
 ====== inet-4.x ======
 
 2017-12-22  ------ inet-3.99.2 released ------
