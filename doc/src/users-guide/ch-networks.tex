@@ -83,28 +83,32 @@ are not models of physical network nodes. They are necessary
 to model other aspects. Some of them are:
 
 \begin{itemize}
+  \item A \textit{radio medium} module such as \nedtype{Ieee80211RadioMedium},
+     \nedtype{ApskScalarRadioMedium} and \nedtype{UnitDiskRadioMedium} 
+     (there are a few of them) are a required component of wireless networks. 
+  \item \nedtype{PhysicalEnvironment} models the effect of the physical 
+     environment (i.e. obstacles) on radio signal propagation. It is an
+     optional component.
+  \item \textit{Configurators} such as \nedtype{Ipv4NetworkConfigurator},
+     \nedtype{L2NetworkConfigurator} and \nedtype{GenericNetworkConfigurator}
+     configure various aspects of the network. For example,  
+     \nedtype{Ipv4\-Network\-Configurator} assigns IP addresses 
+     to hosts and routers, and sets up static routing. It is used 
+     when modeling dynamic IP address assignment (e.g. via DHCP) or 
+     dynamic routing is not of importance. \nedtype{L2NetworkConfigurator} 
+     allows one to configure 802.1 LANs and provide STP/RSTP-related 
+     parameters such as link cost, port priority and the ``is-edge'' flag.
   \item \nedtype{ScenarioManager} allows scripted scenarios, such
      as timed failure and recovery of network nodes.
-  \item \nedtype{Ipv4NetworkConfigurator} assigns IP addresses 
-     to hosts and routers, and sets up static routing.
-\item \nedtype{XXXVisualizer} is ...
-\item \nedtype{Medium} is ...
-\item ...
-\item \nedtype{PhysicalEnvironment}
-\item \nedtype{L2NetworkConfigurator}
-\item \nedtype{MoBanCoordinator}
-\item \nedtype{GenericNetworkConfigurator}
-\item \nedtype{ApskLayeredScalarRadioMedium}
-\item \nedtype{IRadioMedium}
-\item \nedtype{Ieee80211LayeredScalarRadioMedium}
-\item \nedtype{Ieee80211DimensionalRadioMedium}
-\item \nedtype{Ieee80211ScalarRadioMedium}
-\item \nedtype{UnitDiskRadioMedium}
-\item \nedtype{IntegratedCanvasVisualizer}
-
+  \item \textit{Group coordinators} are needed for the operation of some 
+     group mobility mdels. For example, \nedtype{MoBanCoordinator} is 
+     the coordinator module for the MoBAN mobility model.
+  \item \textit{Visualizers} like \nedtype{PacketDropOsgVisualizer} provide
+     graphical rendering of some aspect of the simulation either in
+     2D (canvas) or 3D (using OSG or osgEarth). The usual choice is 
+     \nedtype{IntegratedVisualizer} which bundles together an instance 
+     of each specific visualizer type in a compound module.
 \end{itemize}
-
-TODO revise and extend list
 
 \section{Typical Networks}
 
