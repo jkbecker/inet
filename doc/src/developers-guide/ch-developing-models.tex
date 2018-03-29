@@ -1,8 +1,7 @@
 \chapter{Developing Protocol Models}
 \label{cha:developing-protocol-models}
 
-\section{Developing Protocol Models}
-\label{sec:developing-protocol-models}
+\section{Overview}
 
 This section introduces the most important modeling support features of
 INET. These features facilitate the implementation of applications and
@@ -12,221 +11,15 @@ on already existing APIs while the implementor can focus on the research
 topics. These features differ from the reusable NED modules introduced
 earlier, because they are available in the form of C++ APIs.
 
-The representation of packets is an essential modeling support for
-communication network simulation. Applications and communication protocols
-construct, deconstruct, encapsulate, fragment, aggregate, and manipulate
-packets in many ways. In order to ease the implementation of said
-behavioral patterns, INET provides a feature rich C++ packet API.
-
 The easy usage of protocol services is another essential modeling support.
 Applications often need to use several different protocol services
 simultaneously. In order to spare the applications from using the default
 OMNeT++ message passing style between modules, INET provides an easy to use
 C++ socket API.
 
-\subsection{Packet API}
-\label{subsec:packet-api}
+\section{Working with Packets}
 
-The packet API primarily provides a general purpose packet data structure
-that is capable of representing application packets, \protocol{TCP}
-segments, \protocol{IP} datagrams, \protocol{Ethernet} frames,
-\protocol{IEEE 802.11} frames, etc. The packet data structure allows
-efficient storage, duplication, sharing, encapsulation, aggregation,
-fragmentation, serialization, and data representation selection. The packet
-data structure consists of two layers built on one another. The upper layer
-deals with packets, and the lower layer deals with alternative data
-representations.
-
-The packet API, despite its name, does not only provide the packet data
-structure but several other functionality. For example, communication
-protocols often need to enqueue data for sending (e.g., TCP), or buffer
-received data for reassembly (e.g., IP) or for reordering (e.g., IEEE
-802.11). These services are provided as separate data structures on top of
-the lower layer mentioned above.
-
-Communication between protocols inside network nodes often require passing
-around meta information along with packets. To this end, packets are also
-capable of carrying meta information called tags. Tags are simple C++
-classes which can be either attached to the whole packet or to a specific
-region.
-
-Understanding what's inside a packet is another important and often used
-functionality. Protocol specific packet dissectors allow analyzing the
-contents of packets deeply. For example, packet filtering is based on
-packet dissection, it allows the visualization of certain packets easing
-model understanding.
-
-During model development, packets often need to be printed in a human
-readable form. INET provides a built in packet printer which is
-automatically used by the OMNeT++ runtime user interface to display packets
-in the packet log window. At the network level, the packet log is very
-similar to what is usually provided by network protocol analyzers such as
-Wireshark.
-
-\subsubsection*{Representing Chunks}
-
-The packet data structure is a compound data structure that builds on top
-of another set of data structures called chunks. The chunk data structures
-provide several alternatives to represent a piece of data. Chunks can be
-simple or compound if they are built using other chunks.
-
-Communication protocols and applications may define their own chunks or use
-already existing ones. User defined chunks are most often genereted by the
-OMNeT++ MSG compiler as a subclass of \cppclass{FieldsChunk}. It's also
-possible to write a user defined chunk from scratch.
-
-INET provides the following built-in chunks:
-
-\begin{itemize}
-    \item   repeated byte or bit chunk (\cppclass{ByteCountChunk}, \cppclass{BitCountChunk})
-    \item   raw bytes or bits chunk (\cppclass{BytesChunk}, \cppclass{BitsChunk})
-    \item   ordered sequence of chunks (\cppclass{SequenceChunk})
-    \item   slice of another chunk designated by offset and length (\cppclass{SliceChunk})
-    \item   many protocol specific field based chunks (\cppclass{FieldsChunk} subclasses)
-\end{itemize}
-
-Applications and communication protocols most often construct simple chunks
-to represent application data and protocol headers. The following examples
-demonstrate the construction of various simple chunks.
-
-\cppsnippet{ChunkConstructionExample}{Chunk construction example}
-
-In general, chunks must be constructed with a call to \cppclass{makeShared}
-instead of the standard \cppclass{new} C++ operator. The special
-construction mechanism is required for the efficient sharing of chunks
-among packets using C++ shared pointers.
-
-Packets most often contain several chunks inserted by different protocols
-as packets are passed through the protocol layers.
-
-The most common way of forming such a compound chunk to represent packet
-contents is concatenation.
-
-\cppsnippet{ChunkConcatenationExample}{Chunk concatenation example}
-
-Protocols often need to slice data, for example to provide fragmentation,
-which is also directly supported by the chunk API.
-
-\cppsnippet{ChunkSlicingExample}{Chunk slicing example}
-
-In order to avoid cluttered data representation due to slicing, the chunk
-API provides automatic merging for consecutive chunk slices.
-
-\cppsnippet{ChunkMergingExample}{Chunk merging example}
-
-Alternative representations can be easily converted into one another using
-automatic serialization as a common ground.
-
-\cppsnippet{ChunkConversionExample}{Chunk conversion example}
-
-\msgsnippet{UdpHeaderDefinitionExample}{UDP header definition example}
-
-\subsubsection*{Representing Packets}
-
-The packet data structure uses a single chunk data structure to represent
-its contents. The contents may be as simple as raw bytes
-(\cppclass{BytesChunk}) but most likely it will be the concatenation
-(\cppclass{SequenceChunk}) of various protocol specific headers (e.g.,
-\cppclass{FieldsChunk} subclasses) and application data (e.g.,
-\cppclass{ByteCountChunk}).
-
-Packets can be created by both applications and communication protocols. As
-packets are passed down through the protocol layers in the sender node, new
-protocol specific headers and trailers are inserted during processing.
-
-\cppsnippet{PacketConstructionExample}{Packet construction example}
-
-In order to facilitate processing by communication protocols, packets are
-split into three parts: headers, data, and trailers. As packets are passed
-up through the protocol layers in the receiver node, protocol specific
-headers and trailers are popped during processing.
-
-\cppsnippet{PacketProcessingExample}{Packet processing example}
-
-\subsubsection*{Representing Signals}
-
-TODO
-
-\cppsnippet{SignalConstructionExample}{Signal construction example}
-
-\subsubsection*{Representing Errors}
-
-An essential part of communication network simulation is the understanding
-of protocol behavior in the presence of errors. The packet API provides
-several alternatives for representing errors. The alternatives range from
-simple but computationally cheap to accurate but computationally expensive
-solutions.
-
-\begin{itemize}
-    \item   mark erroneous packets (simple)
-    \item   mark erroneous chunks (good compromise)
-    \item   change bits in raw chunks (accurate)
-\end{itemize}
-
-\cppsnippet{ErrorRepresentationExample}{Error representation example}
-
-The physical layer models support the above mentioned different error
-representations via configurable parameters. Higher layer protocols detect
-errors by chechking the error bit on packets and chunks, and by standard
-CRC mechanisms.
-
-\subsubsection*{Tagging Packets}
-
-Several protocols process a packet while the packet is being passed around
-within a network node. The packet often needs to carry some meta
-information to support this processing. The most trivial meta information
-example is the outermost protocol of the packet which cannot be
-unambigously identified just by looking at the raw data.
-
-\cppsnippet{PacketTaggingExample}{Packet tagging example}
-
-
-\subsubsection*{Tagging Regions}
-
-explain how INET packet representation allows tagging arbitrary regions of
-packets with meta information
-
-\cppsnippet{RegionTaggingExample}{Region tagging example}
-
-\subsubsection*{Dissecting Packets}
-
-\cppsnippet{PacketDissectorCallbackInterface}{Packet dissector callback interface}
-
-\cppsnippet{PacketDissectionExample}{Packet dissection example}
-
-\subsubsection*{Filtering Packets}
-
-\cppsnippet{PacketFilteringExample}{Packet filtering example}
-
-\subsubsection*{Printing Packets}
-
-\cppsnippet{PacketPrintingExample}{Packet printing example}
-
-\subsubsection*{Recording PCAP}
-
-TODO recorded into a PCAP file for further processing with 3rd party tools
-
-\subsection{Socket API}
-\label{subsec:socket-api}
-
-explain the INET socket API in general
-
-\cppsnippet{UDPSocketUsageExample}{UDP socket usage example}
-
-\cppsnippet{TCPSocketUsageExample}{TCP socket usage example}
-
-\subsubsection*{Sending Data}
-
-\subsubsection*{Receiving Data}
-
-\subsubsection*{Configuring Sockets}
-
-\subsection{Protocol Support}
-\label{subsec:protocol-support}
-
-TODO explain simplified C++ code fragments, const omitted, setting chunk fields omitted, etc.
-
-\subsubsection*{Encapsulating Packets}
+\subsection{Encapsulating Packets}
 
 TODO explain how INET packet representation supports encapsulation of packets, provide examples, etc.
 
@@ -234,7 +27,7 @@ TODO explain how INET packet representation supports encapsulation of packets, p
 
 \cppsnippet{PacketDecapsulationExample}{Packet decapsulation example}
 
-\subsubsection*{Fragmenting Packets}
+\subsection{Fragmenting Packets}
 
 explain how INET packet representation supports fragmentation of packets, provide examples, etc.
 
@@ -242,7 +35,7 @@ explain how INET packet representation supports fragmentation of packets, provid
 
 \cppsnippet{PacketDefragmentationExample}{Packet defragmentation example}
 
-\subsubsection*{Aggregating Packets}
+\subsection{Aggregating Packets}
 
 explain how INET packet representation supports aggregation of packets, provide examples, etc.
 
@@ -250,7 +43,7 @@ explain how INET packet representation supports aggregation of packets, provide 
 
 \cppsnippet{PacketDisaggregationExample}{Packet disaggregation example}
 
-\subsubsection*{Serializing Packets}
+\subsection{Serializing Packets}
 
 explain how INET packet representation provides supports for serialization, provide examples, etc.
 
@@ -259,7 +52,7 @@ explain how INET packet representation provides supports for serialization, prov
 \cppsnippet{PacketDeserializationExample}{Packet deserialization example}
 
 
-\subsubsection*{Emulation Support}
+\subsection{Emulation Support}
 
 explain how INET packet representation provides supports for emulation, provide examples, etc.
 
@@ -267,30 +60,37 @@ explain how INET packet representation provides supports for emulation, provide 
 
 \cppsnippet{EmulationPacketReceivingExample}{Emulation packet receiving example}
 
-\subsubsection*{Queueing Packets}
+\subsection{Queueing Packets}
 
 explain how INET supports queueing packet data arriving in order
 
 \cppsnippet{PacketQueueingExample}{Packet queueing example}
 
 
-\subsubsection*{Buffering Packets}
+\subsection{Buffering Packets}
 
 explain how INET supports buffering packet data arriving out of order
 
-\paragraph{Reassembling Packets}
+\subsection{Reassembling Packets}
 
 explain how INET merges packet data arriving out of order into a whole
 
 \cppsnippet{PacketReassemblingExample}{Packet reassembling example}
 
-\paragraph{Reordering Packets}
+\subsection{Reordering Packets}
 
 explain how INET forms a stream from packet data arriving out of order
 
 \cppsnippet{PacketReorderingExample}{Packet reordering example}
 
-\subsubsection*{Resolving Addresses}
+\subsection{Dispatching Packets}
+
+explain how INET allows connecting multiple protocols within a network node in a very flexible way
+
+\cppsnippet{PacketDispatchingExample}{Packet dispatching example}
+
+
+\section{Resolving Addresses}
 
 explain what kind of addresses INET provides for protocols to use: network
 and MAC addresses, related protocols: ARP, DHCP, ND, etc.
@@ -302,21 +102,14 @@ node lookup by MAC address
 node lookup by L3 address
 
 
-\subsubsection*{Dispatching Packets}
-
-explain how INET allows connecting multiple protocols within a network node in a very flexible way
-
-\cppsnippet{PacketDispatchingExample}{Packet dispatching example}
-
-
-\subsubsection*{Initializating Modules}
+\section{Initializing Modules}
 
 explain how INET supports multi stage interdependent module initialization
 
 \cppsnippet{ModuleInitializationExample}{Module initialization example}
 
 
-\subsubsection*{Starting and Stopping Nodes}
+\section{Starting and Stopping Nodes}
 
 explain how INET supports network node lifecycle management: startup, shutdown, crash, etc.
 
