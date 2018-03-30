@@ -1,9 +1,112 @@
-% last updated to inet commit 'e10ce09097652b72f41fcbde5dc81a2cc2537d32'
-
 \chapter{Node Mobility}
 \label{cha:mobility}
 
+\section{Overview}
 
+% Why mobility models are needed?
+In order to simulate ad-hoc wireless networks, it is important to model the
+motion of mobile network nodes. Received signal strength, signal
+interference, and channel occupancy depends on the distances between nodes.
+The selected mobility models can significantly influence the results of the
+simulation (e.g. through packet loss).
+
+% What is the purpose of mobility models?
+A mobility model describes movement and orientation over time in a 3D
+Euclidean coordinate system. Its main purpose is to determine position,
+velocity, acceleration, and similarly angular position, angular velocity,
+and angular acceleration as 3D quantities at the current simulation time.
+
+% How are mobility models implemented?
+In INET, a mobility model is most often an OMNeT++ simple module
+implementing the motion as a C++ algorithm. Although most models have a few
+common parameters (e.g. for initial positioning), they always come with
+their own set of parameters. Some models support geographic positioning to
+ease the configuration of map based scenarios.
+
+\section{Mobility Model Categories}
+
+% How are mobility models categorized?
+Mobility models can be divided into trace-based, deterministic, and
+stochastic categories. Trace-based mobility models replay recorded motion
+as observed in real life. Deterministic and stochastic mobility models use
+synthetic mathematical models for describing motion.
+
+Mobility models can also be divided into static, single, and group
+categories. Static mobility models provide positioning without any motion
+during the simulation. Single mobility models describe the motion of
+entities independent of each other. Finally, group mobility models provide
+such a motion where group members are dependent on each other.
+
+\section{Built-in Mobility Models}
+
+% What mobility models are provided?
+INET contains many mobility models, so the following lists only give a
+taste from various categories.
+
+Stationary mobility models:
+
+\begin{itemize}
+        \item \nedtype{StationaryMobility} provides deterministic and stochastic stationary positioning.
+        \item \nedtype{StaticGridMobility} places several mobility models in a rectangular grid.
+        \item \nedtype{StaticConcentricMobility} places several models in a set of concentric circles.
+\end{itemize}
+
+Deterministic mobility models:
+
+\begin{itemize}
+        \item \nedtype{LinearMobility} moves linearly with a constant speed or constant acceleration.
+        \item \nedtype{CircleMobility} moves around a circle parallel to the XY plane with constant speed.
+        \item \nedtype{RectangleMobility} moves around a rectangular area parallel to the XY plane with constant speed.
+        \item \nedtype{TractorMobility} moves similarly to a tractor on a field with a number of rows.
+        \item \nedtype{VehicleMobility} moves similarly to a vehicle along a path especially turning around corners.
+        \item \nedtype{TurtleMobility} moves according to an XML script written in a simple yet expressive LOGO-like programming language.
+        \item \nedtype{FacingMobility} orients towards the position of another mobility model.
+        \item \nedtype{RotatingMobility} rotates around with a constant speed.
+\end{itemize}
+
+Trace-based mobility models:
+
+\begin{itemize}
+        \item \nedtype{BonnMotionMobility} replays trace files of the \program{BonnMotion} scenario generator.
+        \item \nedtype{Ns2MotionMobility} replays files of the CMU’s scenario generator used in \program{Ns2}.
+        \item \nedtype{AnsimMobility} replays XML trace files of \program{ANSim} (Ad-Hoc Network Simulation).
+\end{itemize}
+
+Stochastic mobility models:
+
+\begin{itemize}
+        \item \nedtype{RandomWaypointMobility} moves to random destination with random speed.
+        \item \nedtype{GaussMarkovMobility} uses one parameter to vary the degree of randomness from linear to brown motion.
+        \item \nedtype{MassMobility} moves similarly to a mass with inertia and momentum.
+        \item \nedtype{ChiangMobility} uses a probabilistic transition matrix to change the motion state.
+\end{itemize}
+
+\section{Combining Mobility Models}
+
+% How are mobility models combined?
+Mobility models can also be combined to form more complex motions without implementing new C++ algorithms.
+
+\begin{itemize}
+        \item \nedtype{SuperpositioningMobility} model combines several other mobility models by summing them up. It allows creating group mobility by sharing a mobility model in each group member, separating initial positioning from positioning during the simulation, and separating positioning from orientation.
+        \item \nedtype{AttachedMobility} models a mobility that is attached to another one at a given offset. Position, velocity and acceleration are all affected by the respective quantites and also the orientation of the referenced mobility.
+\end{itemize}
+
+\section{Using Mobility Models}
+
+% How are mobility models used? A mobility model only determines a
+trajectory, but it does so independently of where and how it's used. In
+order to actually have an effect on the motion of a network node, a
+mobility model is included as a submodule in the compound module of the
+network node. By default, a transceiver antenna within a network node uses
+the same mobility model, but this is completely optional as far as the
+mobility is concerned. For example, a vehicle facing forward while moving
+on a road may contain multiple transceiver antennas at different relative
+locations with different orientations, these motions cannot be accurately
+modeled with a single mobility.
+
+
+
+\section{//////// OLD STUFF ///////////}
 \section{Overview}
 
 In order to accurately evaluate a protocol for an ad-hoc network,

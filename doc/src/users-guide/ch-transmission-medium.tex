@@ -1,0 +1,169 @@
+\chapter{Modeling the Wireless Channel (alias: The Transmission Medium)}
+\label{cha:transmission-medium}
+
+\section{Overview}
+
+For wireless communication, an additional module is required to model the
+shared physical medium where the communication takes place. This module
+keeps track of transceivers, noise sources, ongoing transmissions,
+background noise, and other ongoing noises.
+
+The transmission medium is modeled as an OMNeT++ compound module with
+several replaceable submodules. It contains submodules to model signal
+propagation, path loss, obstacle loss, signal analog model, background
+noise, and various caches for efficiency. With the help of its submodules,
+the medium module computes when, where, and how signals arrive at
+receivers, including the set of interfering signals and noises.
+
+As a central component, the medium module influences performance to a large
+extent, so it also provides a couple of parameters for optimization. For
+example, the \nedtype{rangeFilter} parameter controls how the set of affected
+receivers is determined based on their distance when the signal enters the
+medium.
+
+\section{Propagation Models}
+
+When a transmitter starts to transmit a signal, the beginning of the signal
+propagates through the transmission medium. When the transmitter ends the
+transmission, the signal's end propagates similarly. The propagation model
+describes how a signal moves through space over time. Its main purpose is
+to compute the arrival space-time coordinates at receivers. There are two
+built-in models in INET, implemented as simple modules:
+
+\begin{itemize}
+        \item \nedtype{ConstantTimePropagation} is a simplistic model where the propagation time is independent of the traveled distance. The propagation time is simply determined by a module parameter.
+        \item \nedtype{ConstantSpeedPropagation} is a more realistic model where the propagation time is proportional to the traveled distance. The propagation time is independent of the transmitter and receiver movement during both signal transmission and propagation. The propagation speed is determined by a module parameter.
+\end{itemize}
+
+The default propagation model is configured as follows:
+
+\inisnippet{PropagationModelConfigurationExample}{Propagation model configuration example}
+
+A more accurate model could take into consideration the transmitter and
+receiver movement. This effect becomes especially important for acoustic
+communication, because the propagation speed of the signal is much more
+comparable to the speed of the transceivers.
+
+\section{Path Loss Models}
+
+As a signal propagates through space its power density decreases. This is
+called path loss and it is the combination of many effects such as
+free-space loss, refraction, diffraction, reflection, and absorption. There
+are several different path loss models in the literature, which differ in
+their parameterization and application area.
+
+In INET, a path loss model is an OMNeT++ simple module implementing a
+specific path loss algorithm. Its main purpose is to compute the power loss
+for a given signal, but it's also capable of estimating the range for a
+given loss. The latter is useful, for example, to allow visualizing
+communication range. INET contains a number of built-in path loss
+algorithms, each comes with its own set of parameters:
+
+\begin{itemize}
+        \item \nedtype{FreeSpacePathLoss} models line of sight path loss for air or vacuum.
+        \item \nedtype{BreakpointPathLoss} refines it using dual slope model with two separate path loss exponents.
+        \item \nedtype{LogNormalShadowing} models path loss for a wide range of environments (e.g. urban areas, and buildings)
+        \item \nedtype{TwoRayGroundReflection} models interference between line of sight and single ground reflection.
+        \item \nedtype{TwoRayInterference} refines the above for inter-vechicle communication.
+        \item \nedtype{RicianFading} is a stochastical model for the anomaly caused by partial cancellation of a signal by itself.
+        \item \nedtype{RayleighFading} is a stochastical model for heavily built-up urban environments when there is no dominant propagation along the line of sight.
+        \item \nedtype{NakagamiFading} further refines the above two models for cellular systems.
+\end{itemize}
+
+The following example replaces the default free-space path loss model with
+log normal shadowing:
+
+\inisnippet{PathLossConfigurationExample}{Path loss configuration example}
+
+\section{Obstacle Loss Models}
+
+When the signal propagates through space it also passes through physical
+objects present in that space. As the signal penetrates physical objects,
+its power decreases when it reflects from surfaces, and also when it’s
+absorbed by their material. There are various ways to model this effect,
+which differ in the trade-off between accuracy and performance.
+
+In INET, an obstacle loss model is an OMNeT++ simple module. Its main
+purpose is to compute the power loss based on the traveled path and the
+signal frequency. The obstacle loss models most often use the physical
+environment model to determine the set of penetrated physical objects.
+INET contains a few built-in obstacle loss models:
+
+\begin{itemize}
+        \item \nedtype{IdealObstacleLoss} model determines total or no power loss at all by checking if there is any obstructing physical object along the straight propagation path.
+        \item \nedtype{DielectricObstacleLoss} computes the power loss based on the accurate dielectric and reflection loss along the straight path considering the shape, position, orientation, and material of obstructing physical objects.
+\end{itemize}
+
+By default, the medium module doesn't contain any obstacle loss model, but
+configuring one is very simple:
+
+\inisnippet{ObstacleLossModelConfigurationExample}{Obstacle loss model configuration example}
+
+Statistical obstacle loss models are also possible but currently not provided.
+
+\section{Background Noise Models}
+
+Thermal noise, cosmic background noise, and other random fluctuations of
+the electromagnetic field affect the quality of the communication channel.
+This kind of noise doesn’t come from a particular source, so it doesn’t
+make sense to model its propagation through space. The background noise
+model describes instead how it changes over space and time.
+
+In INET, a background noise model is an OMNeT++ simple module. Its main
+purpose is to compute the analog representation of the background noise for
+a given space-time interval. For example,
+\nedtype{IsotropicScalarBackgroundNoise} computes a background noise that is
+independent of space-time coordinates, and its scalar power is determined
+by a module parameter.
+
+The simplest background noise model can be configured as follows:
+
+\inisnippet{BackgroundNoiseModelConfigurationExample}{Background noise model configuration example}
+
+\section{Analog Models}
+
+The analog signal is a complex physical phenomenon which can be modeled in
+many different ways. Choosing the right analog domain signal representation
+is the most important factor in the trade-off between accuracy and
+performance. The analog model of the transmission medium determines how
+signals are represented while being transmitted, propagated, and received.
+
+In INET, an analog model is an OMNeT++ simple module. Its main purpose is
+to compute the received signal from the transmitted signal. The analog
+model combines the effect of the antenna, path loss, and obstacle loss
+models. Transceivers must be configured transmit and receive signals
+according to the representation used by the analog model.
+
+The most commonly used analog model, which uses a scalar signal power
+representation over a frequency and time interval, can be condigured as
+follows:
+
+\inisnippet{AnalogModelConfigurationExample}{Analog model configuration example}
+
+\section{Neighbor Cache}
+
+Transceivers are considered neighbors if successful communication is
+possible between them. For wired communication it’s easy to determine
+which transceivers are neighbors, because they are connected by wires. In
+contrast, in wireless communication determining which transceivers are
+neighbors isn’t obvious at all.
+
+In INET, a neighbor cache model is an OMNeT++ simple module which provides
+an efficient way of keeping track of the neighbor relationship between
+transceivers. Its main purpose is to compute the set of affected receivers
+for a given transmission. All built-in models in INET provide a
+conservative approximation only, because they update their state
+periodically:
+
+\begin{itemize}
+        \item \nedtype{NeighborListNeighborCache} maintains a separate neighbor list for each transceiver.
+        \item \nedtype{GridNeighborCache} organizes transceivers in a 3D grid with constant cell size.
+        \item \nedtype{QuadTreeNeighborCache} organizes transceivers in a 2D quad tree (ignoring the Z axis) with constant node size.
+\end{itemize}
+
+\inisnippet{NeighborCacheModelConfigurationExample}{Neighbor cache model configuration example}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "usman"
+%%% End:
